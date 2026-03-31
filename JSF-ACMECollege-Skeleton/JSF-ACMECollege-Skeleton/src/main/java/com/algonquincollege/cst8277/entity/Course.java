@@ -18,6 +18,10 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -30,30 +34,36 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The persistent class for the course database table.
  */
-//TODO C01 - Add the missing annotations.
-//TODO C02 - Do we need a mapped super class?  If so, which one?
-public class Course implements Serializable {
+
+@Entity
+@Table(name="course")
+public class Course extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ALL_COURSES_QUERY = "Course.findAll";
 
-	// TODO C03 - Add missing annotations.
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "course_id")
+    protected int id;
+
+	@Column(name="course_code",nullable = false,length = 7)
 	protected String courseCode;
 
-	// TODO C04 - Add missing annotations.
+	@Column(name="course_title",nullable = false, length = 100)
 	protected String courseTitle;
 
-	// TODO C05 - Add missing annotations.
+	@Column(name="credit_units",nullable = true)
 	protected Integer creditUnits;
 
-	// TODO C06 - Add missing annotations.
+	@Column(name="online",nullable = true)
 	protected Short online;
-	
-	// TODO C07 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
-	// TODO C08 - Add other missing annotations.
+
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "course")
+	@JsonIgnore
 	protected Set<CourseRegistration> courseRegistrations = new HashSet<>();
 	
-	// TODO C09 - Add missing annotations.
+	@Transient
 	protected boolean editable = false;
 
 	public Course() {

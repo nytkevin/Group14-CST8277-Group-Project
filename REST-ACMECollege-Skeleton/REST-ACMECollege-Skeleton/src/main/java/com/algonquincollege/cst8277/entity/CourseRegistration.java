@@ -48,19 +48,24 @@ public class CourseRegistration extends PojoBaseCompositeKey<CourseRegistrationP
 	@JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
 	protected Student student;
 
-	//TODO CR01 - Add missing annotations.  Similar to student, this field is a part of the composite key of this entity.  What should be the cascade and fetch types?  Reference to a course is not optional.
+
+	@MapsId("courseId")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "course_id", nullable = false)
 	protected Course course;
 
-	//TODO CR02 - Add missing annotations.  What should be the cascade and fetch types?
+	
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id")
 	protected Professor professor;
 
-	//TODO CR03 - Add missing annotations.
+	@Column(name="year", nullable=false)
 	protected int year;
 
-	//TODO CR03 - Add missing annotations.
+	@Column(name="semester", nullable=false, length= 10)
 	protected String semester;
 
-	//TODO CR03 - Add missing annotations.
+	@Column(name="letter_grade", length= 2)
 	protected String letterGrade;
 
 	public CourseRegistration() {

@@ -18,6 +18,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -30,27 +33,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The persistent class for the course database table.
  */
-//TODO P01 - Add the missing annotations.
-//TODO P02 - Do we need a mapped super class?  If so, which one?
-public class Professor implements Serializable {
+
+@Entity
+@Table(name="professor")
+public class Professor extends PojoBase implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
 	public static final String ALL_PROFESSORS_QUERY = "Professor.findAll";
 
-	// TODO P03 - Add annotations.
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "professor_id")
+    protected int id;
+
+	@Column(name="first_name" ,nullable = false, length = 50)
 	protected String firstName;
 
-	// TODO P04 - Add annotations.
+	@Column(name = "last_name", nullable = false, length = 50)
 	protected String lastName;
 
-	// TODO P05 - Add annotations.
+	@Column(name = "degree", length = 50)
 	protected String degree;
 
-	// TODO P06 - Add annotations for 1:M relation.  What should be the cascade and fetch types?
-	// TODO P07 - Add other missing annotations.
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY , mappedBy = "professor")
 	protected Set<CourseRegistration> courseRegistrations = new HashSet<>();
 	
-	// TODO P08 - Add annotations.
+	@Transient
 	protected boolean editable = false;
 
 	public Professor() {
@@ -81,7 +90,7 @@ public class Professor implements Serializable {
 		this.degree = degree;
 	}
 
-	// TODO P09 - Is an annotation needed here?
+	@JsonIgnore
 	public Set<CourseRegistration> getCourseRegistrations() {
 		return courseRegistrations;
 	}
