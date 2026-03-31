@@ -7,10 +7,14 @@
  */
 package com.algonquincollege.cst8277.entity;
 
-import java.io.Serializable;
 
-//TODO NA01 - Add missing annotations, please see lecture slides.  Value 1 is academic and value 0 is non-academic.
-public class NonAcademic extends StudentClub implements Serializable {
+
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("0")
+public class NonAcademic extends StudentClub{
 	private static final long serialVersionUID = 1L;
 
 	public NonAcademic() {
