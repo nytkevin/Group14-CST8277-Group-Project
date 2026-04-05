@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.algonquincollege.cst8277.rest.resource.HttpErrorResponse;
 
+@SuppressWarnings("unused")
 @WebServlet({"/http-error-as-json-handler"})
 public class HttpErrorAsJSONServlet extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 1L;
