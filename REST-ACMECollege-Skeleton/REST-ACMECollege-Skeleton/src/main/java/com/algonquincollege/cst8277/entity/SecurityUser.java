@@ -35,7 +35,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="security_user")
 @NamedQueries({ 
-    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :username"),
+    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :param1"),
     @NamedQuery(name = SecurityUser.SECURITY_USER_BY_STUDENT_ID, query = "SELECT su FROM SecurityUser su WHERE su.student.id = :studentId")
 })
 
