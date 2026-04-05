@@ -57,7 +57,7 @@ public class SecurityUser implements Serializable, Principal {
   @Column(name = "password_hash", nullable = false, length = 256)
   protected String pwHash;
   
-  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @OneToOne(optional = true)
   @JoinColumn(name = "student_id", referencedColumnName = "id")
   protected Student student;
   
