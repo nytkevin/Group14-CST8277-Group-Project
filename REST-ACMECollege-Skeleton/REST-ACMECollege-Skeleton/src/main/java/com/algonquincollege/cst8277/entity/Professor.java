@@ -36,6 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="professor")
+@NamedQuery( name = Professor.ALL_PROFESSORS_QUERY, query = "SELECT p FROM Professor p")
 public class Professor extends PojoBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
