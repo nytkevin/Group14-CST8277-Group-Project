@@ -18,6 +18,6 @@ public class NonAcademic extends StudentClub{
 	private static final long serialVersionUID = 1L;
 
 	public NonAcademic() {
-		super();
+		super(false);
 	}
 }

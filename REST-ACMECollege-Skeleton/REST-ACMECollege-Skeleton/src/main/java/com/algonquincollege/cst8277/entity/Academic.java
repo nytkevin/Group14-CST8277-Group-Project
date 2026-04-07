@@ -20,6 +20,6 @@ public class Academic extends StudentClub {
 	private static final long serialVersionUID = 1L;
 
 	public Academic() {
-		super();
+		super(true);
 	}
 }
