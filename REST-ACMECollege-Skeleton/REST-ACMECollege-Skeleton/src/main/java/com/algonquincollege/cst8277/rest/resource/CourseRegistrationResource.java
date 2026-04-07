@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.algonquincollege.cst8277.ejb.ACMECollegeService;
 import com.algonquincollege.cst8277.entity.CourseRegistration;
+import com.algonquincollege.cst8277.entity.CourseRegistrationPK;
 
 @Path("/courseregistrations")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -40,8 +41,12 @@ public class CourseRegistrationResource {
     @GET
     @Path("/{id}")
     @RolesAllowed({ADMIN_ROLE, USER_ROLE})
-    public Response getCourseRegistrationById(@PathParam("id") int id) {
-        CourseRegistration cr = service.getCourseRegistrationById(id);
+    public Response getCourseRegistrationById(
+        @PathParam("studentId") int studentId,
+        @PathParam("courseId") int courseId) {
+        CourseRegistrationPK pk = new CourseRegistrationPK(studentId, courseId);
+        CourseRegistration cr = service.getCourseRegistrationById(pk);
+        if (cr == null) return Response.status(Response.Status.NOT_FOUND).build();
         return Response.ok(cr).build();
     }
 
@@ -52,20 +57,32 @@ public class CourseRegistrationResource {
         CourseRegistration newCR = service.persistCourseRegistration(cr);
         return Response.ok(newCR).build();
     }
-    @PUT
-    @Path("/{id}")
+    
+        @PUT
+    @Path("/{studentId}/{courseId}")
     @RolesAllowed({ADMIN_ROLE})
-    public Response updateCourseRegistration(@PathParam("id") int id, CourseRegistration updates) {
-        CourseRegistration updated = service.updateCourseRegistrationById(id, updates);
+    public Response updateCourseRegistration(
+        @PathParam("studentId") int studentId,
+        @PathParam("courseId") int courseId,
+        CourseRegistration updates
+    ) {
+        CourseRegistrationPK pk = new CourseRegistrationPK(studentId, courseId);
+        CourseRegistration updated = service.updateCourseRegistrationById(pk, updates);
+        if (updated == null) return Response.status(Response.Status.NOT_FOUND).build();
         return Response.ok(updated).build();
     }
 
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{studentId}/{courseId}")
     @RolesAllowed({ADMIN_ROLE})
-    public Response deleteCourseRegistration(@PathParam("id") int id) {
-        CourseRegistration deleted = service.deleteCourseRegistrationById(id);
+    public Response deleteCourseRegistration(
+        @PathParam("studentId") int studentId,
+        @PathParam("courseId") int courseId
+    ) {
+        CourseRegistrationPK pk = new CourseRegistrationPK(studentId, courseId);
+        CourseRegistration deleted = service.deleteCourseRegistrationById(pk);
+        if (deleted == null) return Response.status(Response.Status.NOT_FOUND).build();
         return Response.ok(deleted).build();
     }
 }

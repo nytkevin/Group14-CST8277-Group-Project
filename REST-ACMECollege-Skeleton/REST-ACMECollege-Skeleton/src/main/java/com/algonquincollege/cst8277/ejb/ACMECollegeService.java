@@ -52,6 +52,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.algonquincollege.cst8277.entity.Course;
 import com.algonquincollege.cst8277.entity.CourseRegistration;
+import com.algonquincollege.cst8277.entity.CourseRegistrationPK;
 import com.algonquincollege.cst8277.entity.Professor;
 import com.algonquincollege.cst8277.entity.SecurityRole;
 import com.algonquincollege.cst8277.entity.SecurityUser;
@@ -185,7 +186,7 @@ public Student deleteStudentById(int id) {
 		return programs;
     }
 
-	//TODO ACMECS02 - Add the rest of your CRUD methods here.
+//----------------------------------------------PROFESSOR-------------------------------------------------------------------------------//    
     public List<Professor> getAllProfessors() {
     return em.createQuery("SELECT p FROM Professor p", Professor.class).getResultList();
 }
@@ -277,7 +278,7 @@ public StudentClub deleteClubById(int id) {
     return sc;
 }
 
-// -----------------------------------------------------------------------//
+// ------------------------------course registration-----------------------------------------//
 
 public List<CourseRegistration> getAllCourseRegistrations() {
     return em.createQuery("SELECT cr FROM CourseRegistration cr", CourseRegistration.class)
@@ -285,7 +286,7 @@ public List<CourseRegistration> getAllCourseRegistrations() {
 }
 
 
-public CourseRegistration getCourseRegistrationById(int id) {
+public CourseRegistration getCourseRegistrationById(CourseRegistrationPK id) {
     return em.find(CourseRegistration.class, id);
 }
 
@@ -298,7 +299,7 @@ public CourseRegistration persistCourseRegistration(CourseRegistration cr) {
 
 
 @Transactional
-public CourseRegistration updateCourseRegistrationById(int id, CourseRegistration updates) {
+public CourseRegistration updateCourseRegistrationById(CourseRegistrationPK id, CourseRegistration updates) {
     CourseRegistration existing = em.find(CourseRegistration.class, id);
     existing.setStudent(updates.getStudent());
     existing.setCourse(updates.getCourse());
@@ -309,7 +310,7 @@ public CourseRegistration updateCourseRegistrationById(int id, CourseRegistratio
 
 
 @Transactional
-public CourseRegistration deleteCourseRegistrationById(int id) {
+public CourseRegistration deleteCourseRegistrationById(CourseRegistrationPK id) {
     CourseRegistration cr = em.find(CourseRegistration.class, id);
     em.remove(cr);
     return cr;

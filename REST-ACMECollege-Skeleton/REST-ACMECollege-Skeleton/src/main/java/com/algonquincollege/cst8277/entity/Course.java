@@ -38,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="course")
 @AttributeOverride(name = "id", column = @Column(name = "course_id"))
+@NamedQuery( name = Course.ALL_COURSES_QUERY, query = "SELECT c FROM Course c" )
 public class Course extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -48,6 +49,7 @@ public class Course extends PojoBase implements Serializable {
 	protected String courseCode;
 
 	@Basic(optional = false)
+	
 	@Column(name="course_title",nullable = false, length = 100)
 	protected String courseTitle;
 

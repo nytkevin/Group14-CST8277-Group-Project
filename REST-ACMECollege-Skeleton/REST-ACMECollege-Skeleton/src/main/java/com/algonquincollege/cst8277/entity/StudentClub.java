@@ -54,6 +54,7 @@ import com.algonquincollege.cst8277.entity.NonAcademic;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="academic", discriminatorType = DiscriminatorType.INTEGER) 
 @EntityListeners(PojoListener.class) 
+@NamedQuery( name = StudentClub.ALL_STUDENT_CLUBS_QUERY, query = "SELECT sc FROM StudentClub sc" )
 public class StudentClub extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
