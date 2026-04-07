@@ -37,28 +37,26 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="course")
-@NamedQuery( name = Course.ALL_COURSES_QUERY, query = "SELECT c FROM Course c" )
+@AttributeOverride(name = "id", column = @Column(name = "course_id"))
 public class Course extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static final String ALL_COURSES_QUERY = "Course.findAll";
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id")
-    protected int id;
-
+	@Basic(optional = false)
 	@Column(name="course_code",nullable = false,length = 7)
 	protected String courseCode;
 
+	@Basic(optional = false)
 	@Column(name="course_title",nullable = false, length = 100)
 	protected String courseTitle;
 
-	@Column(name="credit_units",nullable = true)
+	@Basic(optional = false)
+	@Column(name="credit_units",nullable = false)
 	protected Integer creditUnits;
 
 	@Column(name="online",nullable = true)
-	protected Short online;
+	protected Boolean online;
 
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "course")
 	@JsonIgnore
@@ -95,11 +93,11 @@ public class Course extends PojoBase implements Serializable {
 		this.creditUnits = creditUnits;
 	}
 
-	public Short getOnline() {
+	public Boolean getOnline() {
 		return online;
 	}
 
-	public void setOnline(Short online) {
+	public void setOnline(Boolean online) {
 		this.online = online;
 	}
 
