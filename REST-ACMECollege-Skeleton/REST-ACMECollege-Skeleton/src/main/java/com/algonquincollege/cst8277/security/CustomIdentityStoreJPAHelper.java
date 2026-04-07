@@ -8,6 +8,7 @@
 package com.algonquincollege.cst8277.security;
 
 import static java.util.Collections.emptySet;
+import static com.algonquincollege.cst8277.entity.SecurityUser.SECURITY_USER_BY_NAME;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.algonquincollege.cst8277.entity.SecurityRole;
 import com.algonquincollege.cst8277.entity.SecurityUser;
+
 
 import static com.algonquincollege.cst8277.utility.MyConstants.PU_NAME;
 import static com.algonquincollege.cst8277.utility.MyConstants.PARAM1;
@@ -41,16 +43,13 @@ public class CustomIdentityStoreJPAHelper {
     public SecurityUser findUserByName(String username) {
         LOG.debug("find a SecurityUser by name = {}", username);
         SecurityUser user = null;
-        /* TODO CISJPAH01 - 
-         *  Call the entity manager's createNamedQuery() method to call a named query on SecurityUser
-         *  The named query should be labeled "SecurityUser.userByName" and accepts a parameter called "param1"
-         *  
-         *  Call getSingleResult() inside a try-catch statement (NoResultException)
-         *  
-         *  Note:  Until this method is complete, the Basic Authentication for all HTTP
-         *         requests will fail, none of the REST'ful endpoints will work.
-         *  
-         */
+        try {
+            TypedQuery<SecurityUser> q = em.createNamedQuery(SECURITY_USER_BY_NAME, SecurityUser.class);
+            q.setParameter(PARAM1, username);
+            user = q.getSingleResult();
+        }
+        catch (NoResultException e) {
+        }
         return user;
     }
 

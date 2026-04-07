@@ -34,7 +34,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="security_user")
 @NamedQueries({ 
-    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :username"),
+    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :param1"),
     @NamedQuery(name = SecurityUser.SECURITY_USER_BY_STUDENT_ID, query = "SELECT su FROM SecurityUser su WHERE su.student.id = :studentId")
 })
 
@@ -56,7 +56,7 @@ public class SecurityUser implements Serializable, Principal {
   @Column(name = "password_hash", nullable = false, length = 256)
   protected String pwHash;
   
-  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @OneToOne(optional = true)
   @JoinColumn(name = "student_id", referencedColumnName = "id")
   protected Student student;
   
