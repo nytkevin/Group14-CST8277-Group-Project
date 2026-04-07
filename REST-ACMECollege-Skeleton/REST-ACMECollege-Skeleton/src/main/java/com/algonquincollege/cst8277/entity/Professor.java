@@ -36,24 +36,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="professor")
+@AttributeOverride(name = "id", column = @Column(name = "professor_id"))
 public class Professor extends PojoBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public static final String ALL_PROFESSORS_QUERY = "Professor.findAll";
 
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "professor_id")
-    protected int id;
 
+	@Basic(optional = false)
 	@Column(name="first_name" ,nullable = false, length = 50)
 	protected String firstName;
 
+	@Basic(optional = false)
 	@Column(name = "last_name", nullable = false, length = 50)
 	protected String lastName;
 
-	@Column(name = "degree", length = 50)
+	@Column(name = "degree", length = 45)
 	protected String degree;
 
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY , mappedBy = "professor")

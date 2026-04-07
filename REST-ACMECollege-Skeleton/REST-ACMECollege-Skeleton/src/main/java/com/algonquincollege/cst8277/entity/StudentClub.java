@@ -50,6 +50,7 @@ import com.algonquincollege.cst8277.entity.NonAcademic;
  */
 @Entity
 @Table(name="student_club")
+@AttributeOverride(name = "id", column = @Column(name = "club_id"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="academic", discriminatorType = DiscriminatorType.INTEGER) 
 @EntityListeners(PojoListener.class) 
@@ -58,24 +59,16 @@ public class StudentClub extends PojoBase implements Serializable {
 	
 	public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id")
-    protected int id;
-
-	@Column(name = "name", nullable = false, length = 100)
+	@Column(name = "name", nullable = false, length = 100, unique = true)
 	protected String name;
 	
-	@Column(name = "description", length = 255)
+	@Column(name = "description", length = 100)
 	protected String desc;
 
 	@Column(name = "academic", nullable = false, insertable = false, updatable = false)
 	protected boolean isAcademic;
 
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	@JoinTable( name = "student_club_members", 
-	joinColumns = @JoinColumn(name = "club_id"), 
-	inverseJoinColumns = @JoinColumn(name = "student_id"))
 	@JsonIgnore
 	protected Set<Student> studentMembers = new HashSet<Student>();
 	
