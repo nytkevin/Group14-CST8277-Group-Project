@@ -49,30 +49,37 @@ import com.algonquincollege.cst8277.entity.NonAcademic;
  * The persistent class for the student_club database table.
  */
 @Entity
-@Table(name="student_club")
-@AttributeOverride(name = "id", column = @Column(name = "club_id"))
+@Table(name = "student_club")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="academic", discriminatorType = DiscriminatorType.INTEGER) 
-@EntityListeners(PojoListener.class) 
-@NamedQuery( name = StudentClub.ALL_STUDENT_CLUBS_QUERY, query = "SELECT sc FROM StudentClub sc" )
+@DiscriminatorColumn(name = "academic", discriminatorType = DiscriminatorType.INTEGER)
+@EntityListeners(PojoListener.class)
+@NamedQuery(name = StudentClub.ALL_STUDENT_CLUBS_QUERY, query = "SELECT DISTINCT sc FROM StudentClub sc LEFT JOIN FETCH sc.studentMembers")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+		@Type(value = Academic.class, name = "academic"),
+		@Type(value = NonAcademic.class, name = "non-academic")
+})
+@AttributeOverride(name = "id", column = @Column(name = "club_id"))
 public class StudentClub extends PojoBase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
 
-	@Column(name = "name", nullable = false, length = 100, unique = true)
+	@Column(name = "name", nullable = false, length = 100)
 	protected String name;
-	
-	@Column(name = "description", length = 100)
+
+	@Column(name = "description", length = 255)
 	protected String desc;
 
 	@Column(name = "academic", nullable = false, insertable = false, updatable = false)
 	protected boolean isAcademic;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinTable(name = "club_membership", joinColumns = @JoinColumn(name = "club_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	@JsonIgnore
 	protected Set<Student> studentMembers = new HashSet<Student>();
-	
+
 	@Transient
 	protected boolean editable = false;
 
@@ -80,10 +87,10 @@ public class StudentClub extends PojoBase implements Serializable {
 		super();
 	}
 
-    public StudentClub(boolean isAcademic) {
-        this();
-        this.isAcademic = isAcademic;
-    }
+	public StudentClub(boolean isAcademic) {
+		this();
+		this.isAcademic = isAcademic;
+	}
 
 	public String getName() {
 		return name;
@@ -100,7 +107,7 @@ public class StudentClub extends PojoBase implements Serializable {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
+
 	public boolean getAcademic() {
 		return this.isAcademic;
 	}
@@ -125,15 +132,16 @@ public class StudentClub extends PojoBase implements Serializable {
 		this.editable = editable;
 	}
 
-	//Inherited hashCode/equals is sufficient for this Entity class
+	// Inherited hashCode/equals is sufficient for this Entity class
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("StudentClub[id = ").append(id).append(", name = ").append(name).append(", desc = ")
 				.append(desc).append(", isAcademic = ").append(isAcademic)
-				.append(", created = ").append(created).append(", updated = ").append(updated).append(", version = ").append(version).append("]");
+				.append(", created = ").append(created).append(", updated = ").append(updated).append(", version = ")
+				.append(version).append("]");
 		return builder.toString();
 	}
-	
+
 }
