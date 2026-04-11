@@ -59,13 +59,15 @@ public class CourseRegistration extends PojoBaseCompositeKey<CourseRegistrationP
     @JoinColumn(name = "professor_id")
 	protected Professor professor;
 
+	@Basic(optional = false)
 	@Column(name="year", nullable=false)
 	protected int year;
 
-	@Column(name="semester", nullable=false, length= 10)
+	@Basic(optional = false)
+	@Column(name="semester", nullable=false, length= 6)
 	protected String semester;
 
-	@Column(name="letter_grade", length= 2)
+	@Column(name="letter_grade", length= 3)
 	protected String letterGrade;
 
 	public CourseRegistration() {

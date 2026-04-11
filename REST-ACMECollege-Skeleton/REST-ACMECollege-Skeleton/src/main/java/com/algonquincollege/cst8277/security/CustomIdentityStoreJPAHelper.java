@@ -49,6 +49,7 @@ public class CustomIdentityStoreJPAHelper {
             user = q.getSingleResult();
         }
         catch (NoResultException e) {
+            LOG.debug("No user found with username = {}", username);
         }
         return user;
     }

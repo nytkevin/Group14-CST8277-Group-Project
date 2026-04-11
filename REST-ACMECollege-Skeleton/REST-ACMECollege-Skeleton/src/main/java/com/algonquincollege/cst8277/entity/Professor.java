@@ -46,10 +46,11 @@ public class Professor extends PojoBase implements Serializable {
 	@Column(name = "first_name", nullable = false, length = 50)
 	protected String firstName;
 
+	@Basic(optional = false)
 	@Column(name = "last_name", nullable = false, length = 50)
 	protected String lastName;
 
-	@Column(name = "degree", length = 50)
+	@Column(name = "degree", length = 45)
 	protected String degree;
 
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "professor")
