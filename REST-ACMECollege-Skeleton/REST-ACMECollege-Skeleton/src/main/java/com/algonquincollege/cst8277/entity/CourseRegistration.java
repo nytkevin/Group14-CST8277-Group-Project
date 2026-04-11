@@ -44,7 +44,7 @@ public class CourseRegistration extends PojoBaseCompositeKey<CourseRegistrationP
 
 	// @MapsId is used to map a part of composite key to an entity.
 	@MapsId("studentId")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "student_id", referencedColumnName = "id", nullable = false)
 	protected Student student;
 
@@ -55,7 +55,7 @@ public class CourseRegistration extends PojoBaseCompositeKey<CourseRegistrationP
 	protected Course course;
 
 	
-	@ManyToOne(optional = true, fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "professor_id")
 	protected Professor professor;
 

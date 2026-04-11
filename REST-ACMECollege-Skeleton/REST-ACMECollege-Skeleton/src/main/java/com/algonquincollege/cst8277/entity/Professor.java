@@ -35,17 +35,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 
 @Entity
-@Table(name="professor")
+@Table(name = "professor")
+@NamedQuery(name = Professor.ALL_PROFESSORS_QUERY, query = "SELECT p FROM Professor p LEFT JOIN FETCH p.courseRegistrations")
 @AttributeOverride(name = "id", column = @Column(name = "professor_id"))
-@NamedQuery( name = Professor.ALL_PROFESSORS_QUERY, query = "SELECT p FROM Professor p" )
 public class Professor extends PojoBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public static final String ALL_PROFESSORS_QUERY = "Professor.findAll";
 
-
-	@Basic(optional = false)
-	@Column(name="first_name" ,nullable = false, length = 50)
+	@Column(name = "first_name", nullable = false, length = 50)
 	protected String firstName;
 
 	@Basic(optional = false)
@@ -55,9 +53,9 @@ public class Professor extends PojoBase implements Serializable {
 	@Column(name = "degree", length = 45)
 	protected String degree;
 
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY , mappedBy = "professor")
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "professor")
 	protected Set<CourseRegistration> courseRegistrations = new HashSet<>();
-	
+
 	@Transient
 	protected boolean editable = false;
 
@@ -106,15 +104,16 @@ public class Professor extends PojoBase implements Serializable {
 		this.editable = editable;
 	}
 
-	//Inherited hashCode/equals is sufficient for this Entity class
+	// Inherited hashCode/equals is sufficient for this Entity class
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Professor[id = ").append(id).append(", firstName = ").append(firstName).append(", lastName = ")
 				.append(lastName).append(", degree = ").append(degree)
-				.append(", created = ").append(created).append(", updated = ").append(updated).append(", version = ").append(version).append("]");
+				.append(", created = ").append(created).append(", updated = ").append(updated).append(", version = ")
+				.append(version).append("]");
 		return builder.toString();
 	}
-	
+
 }
