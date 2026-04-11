@@ -1,0 +1,1159 @@
+{
+  "info": {
+    "_postman_id": "3ec78d6b-331d-43b4-9b80-5b67d6b9b895",
+    "name": "ACME College REST API Tests",
+    "description": "Test collection for REST-ACMECollege-Skeleton\n\nCredentials:\n- Admin: admin / admin\n- User: cst8277 / 8277\n\nBase URL: http://localhost:8080/REST-ACMECollege-Skeleton/api/v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50636761",
+    "_collection_link": "https://go.postman.co/collection/50636761-3ec78d6b-331d-43b4-9b80-5b67d6b9b895?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Student (Admin)",
+      "item": [
+        {
+          "name": "GET All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Student\",\n  \"email\": \"ajohnson@algonquincollege.com\",\n  \"phone\": \"6135551234\",\n  \"program\": \"Computer Science\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/student",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith-Updated\",\n  \"email\": \"jsmith@algonquincollege.com\",\n  \"phone\": \"6131112222\",\n  \"program\": \"Dentistry\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/student/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Student 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Course (Admin)",
+      "item": [
+        {
+          "name": "GET All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Course by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/course/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseCode\": \"CST8101\",\n  \"courseTitle\": \"Computer Essentials\",\n  \"creditUnits\": 3,\n  \"online\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Course",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseCode\": \"CST8116\",\n  \"courseTitle\": \"Intro to Computer Programming (Updated)\",\n  \"creditUnits\": 4,\n  \"online\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/course/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Course",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/course/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Course 404",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseCode\": \"CST8116\",\n  \"courseTitle\": \"Intro to Computer Programming (Updated)\",\n  \"creditUnits\": 4,\n  \"online\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/course/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Professor (Admin)",
+      "item": [
+        {
+          "name": "GET All Professors",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/professor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Professor by ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/professor/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Professor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Tony\",\n  \"lastName\": \"Stark\",\n  \"degree\": \"Master of Engineering\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/professor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Professor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Charles\",\n  \"lastName\": \"Xavier-Updated\",\n  \"degree\": \"Doctor of Science\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/professor/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Professor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/professor/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Professor 404",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/professor/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Student Club (Admin)",
+      "item": [
+        {
+          "name": "GET All Clubs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/studentclub",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Club by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/studentclub/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Club",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"academic\",\n  \"name\": \"Robotics Club\",\n  \"desc\": \"For students interested in robotics and automation.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/studentclub",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Update Club",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"academic\",\n  \"name\": \"AI & ML Club\",\n  \"desc\": \"Updated description for AI and ML enthusiasts.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/studentclub/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Club",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/studentclub/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Course Registration (Admin)",
+      "item": [
+        {
+          "name": "GET All Registrations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Letter Grades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/lettergrade",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "lettergrade"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student\": { \"id\": 1 },\n  \"course\": { \"id\": 1 },\n  \"year\": 2026,\n  \"semester\": \"WINTER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Assign Professor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/student/1/course/1/professor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "student",
+                "1",
+                "course",
+                "1",
+                "professor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT Assign Grade",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "A+"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/student/1/course/1/grade",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "student",
+                "1",
+                "course",
+                "1",
+                "grade"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Registration",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/student/1/course/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "student",
+                "1",
+                "course",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Role Tests",
+      "item": [
+        {
+          "name": "GET All Students (User - should 403)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Own Student (User - should 200)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Other Student (User - should 403)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET All Courses (User - should 403)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET All Clubs (User - should 200)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/studentclub",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Create Course (User - should 403)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseCode\": \"HACK01\",\n  \"courseTitle\": \"Should Not Work\",\n  \"creditUnits\": 1,\n  \"online\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET My Registrations (User)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/my",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET All Programs  (User - should 200)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/program",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "program"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET All Degrees (User - should 200)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/professor/degree",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "degree"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Letter Grades (User - should 200)",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cst8277",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "8277",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/lettergrade",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "lettergrade"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "No Auth Tests",
+      "item": [
+        {
+          "name": "GET Students (No Auth - should 401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Courses (No Auth - should 401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "course"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Programs",
+      "item": [
+        {
+          "name": "GET All Programs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/student/program",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "student",
+                "program"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Degrees",
+      "item": [
+        {
+          "name": "GET All Degrees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/professor/degree",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "professor",
+                "degree"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/REST-ACMECollege-Skeleton/api/v1"
+    }
+  ]
+}
