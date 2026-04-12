@@ -15,28 +15,25 @@ export default function AssignProfessorPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!form.studentId || !form.courseId || !form.professorId) {
       setMessage("All fields are required!");
       return;
     }
 
     try {
-      const res = await assignProfessor({
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          studentId: parseInt(form.studentId),
-          courseId: parseInt(form.courseId),
-          professorId: parseInt(form.professorId),
-        }),
-      });
+      const res = await assignProfessor(
+        parseInt(form.studentId),
+        parseInt(form.courseId),
+        parseInt(form.professorId),
+      );
 
       if (res.ok) {
         setMessage("Professor assigned successfully!");
         setForm({ studentId: "", courseId: "", professorId: "" });
       } else {
-        const err = await res.json();
-        setMessage("Error: " + err.message || res.statusText);
+        const errText = await res.text(); // safer than res.json()
+        setMessage("Error: " + errText);
       }
     } catch (error) {
       setMessage("Error: " + error.message);

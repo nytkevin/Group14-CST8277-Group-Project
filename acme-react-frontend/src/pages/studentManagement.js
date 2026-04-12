@@ -101,20 +101,12 @@ export default function StudentManagement() {
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">abanyeshuri</h2>
-
       <div className="mb-4 flex flex-wrap gap-2">
         <button
           onClick={handleNewStudent}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          New Student
-        </button>
-        <button
-          onClick={loadStudents}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Refresh
+          Add New Student
         </button>
       </div>
 
@@ -212,6 +204,12 @@ export default function StudentManagement() {
           ))}
         </tbody>
       </table>
+      <button
+        onClick={loadStudents}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+      >
+        Refresh
+      </button>
     </div>
   );
 }

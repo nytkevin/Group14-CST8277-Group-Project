@@ -9,7 +9,7 @@ const getAuthHeaders = () => {
   };
 };
 
-// CREATE professor
+// Assign/PUT professor
 export const assignProfessor = (studentId, courseId, professorId) =>
   fetch(
     `${BASE_URL}/courseregistration/student/${studentId}/course/${courseId}/professor`,
@@ -18,4 +18,4 @@ export const assignProfessor = (studentId, courseId, professorId) =>
       headers: getAuthHeaders(),
       body: JSON.stringify(professorId),
     },
-  ).then((res) => res.json());
+  );

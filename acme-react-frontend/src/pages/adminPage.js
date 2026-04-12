@@ -1,5 +1,4 @@
 import { useState } from "react";
-import LandingPage from "./landingPage";
 import Login from "./login";
 import { useAuth } from "../contexts/AuthContext";
 import StudentManagement from "./studentManagement";
@@ -9,7 +8,7 @@ import StudentClub from "./studentsClubManagement";
 import CourseRegistrationPage from "./courseRegistration";
 import AssignProfessorPage from "./assignProfessorPage";
 import AssignGradePage from "./assignGradePage";
-
+import LandingPage from "./landingPage";
 const pageMap = {
   "Student Management": StudentManagement,
   "Course Management": CourseManagement,
@@ -55,6 +54,7 @@ export default function AdminPage({ loggedIn, showLogin, setShowLogin }) {
                 <option value="" disabled>
                   Select an option
                 </option>
+                <option> None</option>
                 <option value="Student Management">Student Management</option>
                 <option value="Course Management">Course Management</option>
                 <option value="Professor Management">
@@ -84,7 +84,7 @@ export default function AdminPage({ loggedIn, showLogin, setShowLogin }) {
       {showLogin && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-4 max-w-md w-full mx-4">
-            <Login />
+            <Login onSuccess={() => setShowLogin(false)} />
             <button
               onClick={() => setShowLogin(false)}
               className="mt-4 w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"

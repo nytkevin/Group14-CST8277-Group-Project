@@ -35,8 +35,14 @@ export default function CourseManagement() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const payload = {
+      ...form,
+      creditUnits: Number(form.creditUnits),
+      online: form.online === "1",
+    };
+
     if (editingId) {
-      updateCourse(editingId, form).then(() => {
+      updateCourse(editingId, payload).then(() => {
         setEditingId(null);
         setForm({
           courseCode: "",
@@ -48,7 +54,7 @@ export default function CourseManagement() {
         loadCourses();
       });
     } else {
-      createCourse(form).then(() => {
+      createCourse(payload).then(() => {
         setForm({
           courseCode: "",
           courseTitle: "",
@@ -107,13 +113,7 @@ export default function CourseManagement() {
           onClick={handleNewCourse}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          New Course
-        </button>
-        <button
-          onClick={loadCourses}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Refresh
+          Add New Course
         </button>
       </div>
 
@@ -179,31 +179,45 @@ export default function CourseManagement() {
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-300 p-2">ID</th>
-            <th className="border border-gray-300 p-2">Code</th>
-            <th className="border border-gray-300 p-2">Title</th>
-            <th className="border border-gray-300 p-2">Credits</th>
+            <th className="border border-gray-300 p-2">Course Code </th>
+            <th className="border border-gray-300 p-2">Course Title</th>
+            <th className="border border-gray-300 p-2">Credits Units </th>
             <th className="border border-gray-300 p-2">Online</th>
             <th className="border border-gray-300 p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {courses.map((c) => (
-            <tr key={c.id}>
-              <td className="border border-gray-300 p-2">{c.id}</td>
-              <td className="border border-gray-300 p-2">{c.courseCode}</td>
-              <td className="border border-gray-300 p-2">{c.courseTitle}</td>
-              <td className="border border-gray-300 p-2">{c.creditUnits}</td>
-              <td className="border border-gray-300 p-2">{c.online}</td>
+          {courses.map((course) => (
+            <tr key={course.id}>
+              <td className="border border-gray-300 p-2">{course.id}</td>
+              <td className="border border-gray-300 p-2">
+                {course.courseCode}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {course.courseTitle}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {course.creditUnits}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {course.online ? 1 : 0}
+              </td>
               <td className="border border-gray-300 p-2">
                 <Actions
-                  onEdit={() => handleEdit(c)}
-                  onDelete={() => handleDelete(c.id)}
+                  onEdit={() => handleEdit(course)}
+                  onDelete={() => handleDelete(course.id)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button
+        onClick={loadCourses}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+      >
+        Refresh
+      </button>
     </div>
   );
 }

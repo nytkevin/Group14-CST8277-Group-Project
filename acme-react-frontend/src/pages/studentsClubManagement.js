@@ -4,14 +4,14 @@ import {
   createClub,
   updateClub,
   deleteClub,
-} from "../services/studentClubService";
+} from "../services/studentClubManagementService";
 import Actions from "../components/actions";
 
 export default function StudentClub() {
   const [clubs, setClubs] = useState([]);
   const [form, setForm] = useState({
     name: "",
-    desc: "",
+    description: "",
     academic: false,
   });
   const [editingId, setEditingId] = useState(null);
@@ -43,7 +43,7 @@ export default function StudentClub() {
     submitPromise
       .then(() => {
         setEditingId(null);
-        setForm({ name: "", desc: "", academic: false });
+        setForm({ name: "", description: "", academic: false });
         setShowForm(false);
         loadClubs();
       })
@@ -54,7 +54,7 @@ export default function StudentClub() {
   };
 
   const handleCancel = () => {
-    setForm({ name: "", desc: "", academic: false });
+    setForm({ name: "", description: "", academic: false });
     setEditingId(null);
     setShowForm(false);
   };
@@ -72,7 +72,7 @@ export default function StudentClub() {
   const handleNewClub = () => {
     setShowForm(true);
     setEditingId(null);
-    setForm({ name: "", desc: "", academic: false });
+    setForm({ name: "", description: "", academic: false });
   };
 
   return (
@@ -84,13 +84,7 @@ export default function StudentClub() {
           onClick={handleNewClub}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          New Student Club
-        </button>
-        <button
-          onClick={loadClubs}
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Refresh
+          Add New Student Club
         </button>
       </div>
 
@@ -108,9 +102,9 @@ export default function StudentClub() {
           </div>
           <div className="mb-2">
             <input
-              name="desc"
+              name="description"
               placeholder="Description"
-              value={form.desc}
+              value={form.description}
               onChange={handleChange}
               className="w-full border rounded p-2"
               required
@@ -147,24 +141,30 @@ export default function StudentClub() {
           </tr>
         </thead>
         <tbody>
-          {clubs.map((c) => (
-            <tr key={c.id}>
-              <td className="border border-gray-300 p-2">{c.id}</td>
-              <td className="border border-gray-300 p-2">{c.name}</td>
-              <td className="border border-gray-300 p-2">{c.desc}</td>
+          {clubs.map((club) => (
+            <tr key={club.id}>
+              <td className="border border-gray-300 p-2">{club.id}</td>
+              <td className="border border-gray-300 p-2">{club.name}</td>
+              <td className="border border-gray-300 p-2">{club.description}</td>
               <td className="border border-gray-300 p-2">
-                {c.academic.toString()}
+                {club.academic.toString()}
               </td>
               <td className="border border-gray-300 p-2">
                 <Actions
-                  onEdit={() => handleEdit(c)}
-                  onDelete={() => handleDelete(c.id)}
+                  onEdit={() => handleEdit(club)}
+                  onDelete={() => handleDelete(club.id)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button
+        onClick={loadClubs}
+        className="ml-60 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Refresh
+      </button>
     </div>
   );
 }

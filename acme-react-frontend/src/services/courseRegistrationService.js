@@ -26,17 +26,20 @@ export const getMyCourseRegistrations = () =>
     .then((data) => ({ data }));
 
 // CREATE course registration
-export const createCourseRegistration = (registration) =>
-  fetch(`${BASE_URL}/courseregistration`, {
+export const createCourseRegistration = async (registration) => {
+  const res = await fetch(`${BASE_URL}/courseregistration`, {
     method: "POST",
     headers: getAuthHeaders(),
     body: JSON.stringify(registration),
-  })
-    .then((res) => res.json())
-    .catch((error) => {
-      console.error("Error creating course registration:", error);
-      throw error;
-    });
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || "Registration failed");
+  }
+
+  return res.json();
+};
 
 // DELETE course registration
 export const deleteCourseRegistration = (studentId, courseId) =>

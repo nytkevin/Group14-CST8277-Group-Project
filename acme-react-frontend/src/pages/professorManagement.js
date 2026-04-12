@@ -88,12 +88,6 @@ export default function ProfessorManagement() {
         >
           New Professor
         </button>
-        <button
-          onClick={loadProfessors}
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Refresh
-        </button>
       </div>
 
       {showForm && (
@@ -149,22 +143,32 @@ export default function ProfessorManagement() {
           </tr>
         </thead>
         <tbody>
-          {professors.map((p) => (
-            <tr key={p.id}>
-              <td className="border border-gray-300 p-2">{p.id}</td>
-              <td className="border border-gray-300 p-2">{p.firstName}</td>
-              <td className="border border-gray-300 p-2">{p.lastName}</td>
-              <td className="border border-gray-300 p-2">{p.degree}</td>
+          {professors.map((professor) => (
+            <tr key={professor.id}>
+              <td className="border border-gray-300 p-2">{professor.id}</td>
+              <td className="border border-gray-300 p-2">
+                {professor.firstName}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {professor.lastName}
+              </td>
+              <td className="border border-gray-300 p-2">{professor.degree}</td>
               <td className="border border-gray-300 p-2">
                 <Actions
-                  onEdit={() => handleEdit(p)}
-                  onDelete={() => handleDelete(p.id)}
+                  onEdit={() => handleEdit(professor)}
+                  onDelete={() => handleDelete(professor.id)}
                 />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button
+        onClick={loadProfessors}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+      >
+        Refresh
+      </button>
     </div>
   );
 }
