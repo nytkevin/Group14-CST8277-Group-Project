@@ -79,7 +79,12 @@ export default function AdminPage({ loggedIn, showLogin, setShowLogin }) {
             <div className="mt-6">
               <h2 className="text-xl font-semibold mb-3">{activePage}</h2>
               <div className="border rounded bg-gray-50 p-4">
-                <PageComponent />
+                <PageComponent
+                  onCancelPage={() => {
+                    setActivePage("");
+                    setOption("");
+                  }}
+                />
               </div>
             </div>
           )}

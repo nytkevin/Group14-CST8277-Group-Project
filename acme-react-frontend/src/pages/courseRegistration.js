@@ -4,7 +4,7 @@ import {
   getSemesters,
 } from "../services/courseRegistrationService";
 
-export default function CourseRegistrationPage() {
+export default function CourseRegistrationPage({ onCancelPage }) {
   const [semesters, setSemesters] = useState([]);
   const [form, setForm] = useState({
     studentId: "",
@@ -64,6 +64,7 @@ export default function CourseRegistrationPage() {
     setForm({ studentId: "", courseId: "", year: "", semester: "" });
     setMessage("");
     setMessageType("");
+    if (onCancelPage) onCancelPage();
   };
 
   return (

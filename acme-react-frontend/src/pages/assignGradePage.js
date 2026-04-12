@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { assignGrade, getLetterGrades } from "../services/assignGrade";
 
-export default function AssignGradePage() {
+export default function AssignGradePage({ onCancelPage }) {
   const [form, setForm] = useState({
     studentId: "",
     courseId: "",
@@ -39,6 +39,13 @@ export default function AssignGradePage() {
     }
   };
 
+  const handleCancel = () => {
+    setForm({ studentId: "", courseId: "", letterGrade: "" });
+    setMessage("");
+    setMessageType("");
+    if (onCancelPage) onCancelPage();
+  };
+
   useEffect(() => {
     getLetterGrades()
       .then((data) => setGrades(data))
@@ -49,7 +56,9 @@ export default function AssignGradePage() {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
       <h1 className="text-xl font-bold mb-4">Assign Grade </h1>
       {message && (
-        <p className={`mb-4 ${messageType === "success" ? "text-green-600" : "text-red-600"}`}>
+        <p
+          className={`mb-4 ${messageType === "success" ? "text-green-600" : "text-red-600"}`}
+        >
           {message}
         </p>
       )}
@@ -100,12 +109,7 @@ export default function AssignGradePage() {
         </div>
         <div className="flex flex-row space-x-2">
           <button type="submit">Submit</button>
-          <button
-            type="button"
-            onClick={() =>
-              setForm({ studentId: "", courseId: "", letterGrade: "" })
-            }
-          >
+          <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </div>

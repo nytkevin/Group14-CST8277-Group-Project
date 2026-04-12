@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { assignProfessor } from "../services/assignProfessor";
 
-export default function AssignProfessorPage() {
+export default function AssignProfessorPage({ onCancelPage }) {
   const [form, setForm] = useState({
     studentId: "",
     courseId: "",
@@ -89,9 +89,11 @@ export default function AssignProfessorPage() {
           <button type="submit">Submit</button>
           <button
             type="button"
-            onClick={() =>
-              setForm({ studentId: "", courseId: "", professorId: "" })
-            }
+            onClick={() => {
+              setForm({ studentId: "", courseId: "", professorId: "" });
+              setMessage("");
+              if (onCancelPage) onCancelPage();
+            }}
           >
             Cancel
           </button>

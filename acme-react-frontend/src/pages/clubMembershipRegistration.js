@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ClubMembershipPage() {
+export default function ClubMembershipPage({ onCancelPage }) {
   const [form, setForm] = useState({ studentId: "", clubId: "" });
   const [message, setMessage] = useState("");
 
@@ -82,7 +82,11 @@ export default function ClubMembershipPage() {
           <button type="submit">Submit</button>
           <button
             type="button"
-            onClick={() => setForm({ studentId: "", clubId: "" })}
+            onClick={() => {
+              setForm({ studentId: "", clubId: "" });
+              setMessage("");
+              if (onCancelPage) onCancelPage();
+            }}
           >
             Cancel
           </button>
