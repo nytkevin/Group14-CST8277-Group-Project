@@ -24,6 +24,9 @@ export default function Login() {
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
           Login to ACME College
         </h2>
+        <div className="text-sm text-gray-600 mb-4 text-center">
+          Test credentials: admin / admin or cst8277 / 8277
+        </div>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">

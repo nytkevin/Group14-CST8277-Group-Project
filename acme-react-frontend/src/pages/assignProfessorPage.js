@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { assignProfessor } from "../services/assignProfessor";
 
 export default function AssignProfessorPage() {
   const [form, setForm] = useState({
@@ -20,18 +21,15 @@ export default function AssignProfessorPage() {
     }
 
     try {
-      const res = await fetch(
-        "http://localhost:8080/api/course-registrations/assign-professor",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            studentId: parseInt(form.studentId),
-            courseId: parseInt(form.courseId),
-            professorId: parseInt(form.professorId),
-          }),
-        },
-      );
+      const res = await assignProfessor({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          studentId: parseInt(form.studentId),
+          courseId: parseInt(form.courseId),
+          professorId: parseInt(form.professorId),
+        }),
+      });
 
       if (res.ok) {
         setMessage("Professor assigned successfully!");

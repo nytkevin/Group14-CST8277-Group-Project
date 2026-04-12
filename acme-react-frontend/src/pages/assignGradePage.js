@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getLetterGrades } from "../services/assignGrade";
 
 export default function AssignGradePage() {
   const [form, setForm] = useState({
@@ -7,6 +8,7 @@ export default function AssignGradePage() {
     letterGrade: "",
   });
   const [message, setMessage] = useState("");
+  const [grades, setGrades] = useState([]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,32 +21,13 @@ export default function AssignGradePage() {
       setMessage("All fields are required!");
       return;
     }
-
-    try {
-      const res = await fetch(
-        `http://localhost:8080/api/course-registrations/assign-grade`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            studentId: parseInt(form.studentId),
-            courseId: parseInt(form.courseId),
-            letterGrade: form.letterGrade.toUpperCase(),
-          }),
-        },
-      );
-
-      if (res.ok) {
-        setMessage("Grade assigned successfully!");
-        setForm({ studentId: "", courseId: "", letterGrade: "" });
-      } else {
-        const err = await res.json();
-        setMessage("Error: " + err.message || res.statusText);
-      }
-    } catch (error) {
-      setMessage("Error: " + error.message);
-    }
   };
+
+  useEffect(() => {
+    getLetterGrades()
+      .then((data) => setGrades(data))
+      .catch(() => setMessage("Failed to load grades"));
+  }, []);
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
@@ -80,16 +63,20 @@ export default function AssignGradePage() {
 
         <div>
           <label className="block font-medium">Letter Grade</label>
-          <input
-            type="text"
+          <select
             name="letterGrade"
             value={form.letterGrade}
             onChange={handleChange}
             className="w-full border rounded p-2"
-            placeholder="A, B+, etc."
-            maxLength={3}
             required
-          />
+          >
+            <option value="">Select Grade</option>
+            {grades.map((grade, index) => (
+              <option key={index} value={grade}>
+                {grade}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-row space-x-2">
           <button type="submit">Submit</button>

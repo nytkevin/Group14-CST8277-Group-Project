@@ -8,7 +8,7 @@ import ProfessorManagement from "./professorManagement";
 import StudentClub from "./studentsClubManagement";
 import CourseRegistrationPage from "./courseRegistration";
 import AssignProfessorPage from "./assignProfessorPage";
-import AssignGradePage from "./assignGrade";
+import AssignGradePage from "./assignGradePage";
 
 const pageMap = {
   "Student Management": StudentManagement,

@@ -4,7 +4,7 @@ import {
   createCourse,
   updateCourse,
   deleteCourse,
-} from "../services/courseService";
+} from "../services/courseManagementService";
 import Actions from "../components/actions";
 
 export default function CourseManagement() {

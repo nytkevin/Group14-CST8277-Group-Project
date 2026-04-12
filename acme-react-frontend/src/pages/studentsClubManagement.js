@@ -36,20 +36,21 @@ export default function StudentClub() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      updateClub(editingId, form).then(() => {
+    const submitPromise = editingId
+      ? updateClub(editingId, form)
+      : createClub(form);
+
+    submitPromise
+      .then(() => {
         setEditingId(null);
         setForm({ name: "", desc: "", academic: false });
         setShowForm(false);
         loadClubs();
+      })
+      .catch((error) => {
+        console.error("Error submitting club:", error);
+        alert("Error saving club. Please try again.");
       });
-    } else {
-      createClub(form).then(() => {
-        setForm({ name: "", desc: "", academic: false });
-        setShowForm(false);
-        loadClubs();
-      });
-    }
   };
 
   const handleCancel = () => {
@@ -115,15 +116,21 @@ export default function StudentClub() {
               required
             />
           </div>
-          <div className="mb-2 flex items-center">
-            <input
-              type="checkbox"
+          <div className="mb-2">
+            <label className="block mb-1 font-medium">Academic</label>
+            <select
               name="academic"
-              checked={form.academic}
-              onChange={handleChange}
-              className="mr-2"
-            />
-            <label>Academic</label>
+              value={form.academic.toString()}
+              onChange={(e) => {
+                const value = e.target.value === "true";
+                setForm({ ...form, academic: value });
+              }}
+              className="w-full border rounded p-2"
+              required
+            >
+              <option value="false">false</option>
+              <option value="true">true</option>
+            </select>
           </div>
           <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
         </form>
@@ -146,7 +153,7 @@ export default function StudentClub() {
               <td className="border border-gray-300 p-2">{c.name}</td>
               <td className="border border-gray-300 p-2">{c.desc}</td>
               <td className="border border-gray-300 p-2">
-                {c.academic ? "Yes" : "No"}
+                {c.academic.toString()}
               </td>
               <td className="border border-gray-300 p-2">
                 <Actions

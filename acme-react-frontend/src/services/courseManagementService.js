@@ -9,33 +9,33 @@ const getAuthHeaders = () => {
   };
 };
 
-// GET all clubs
-export const getClubs = () =>
-  fetch(`${BASE_URL}/studentclub`, {
+// GET all courses
+export const getCourses = () =>
+  fetch(`${BASE_URL}/course`, {
     headers: getAuthHeaders(),
   })
     .then((res) => res.json())
     .then((data) => ({ data }));
 
-// CREATE club
-export const createClub = (club) =>
-  fetch(`${BASE_URL}/studentclub`, {
+// CREATE course
+export const createCourse = (course) =>
+  fetch(`${BASE_URL}/course`, {
     method: "POST",
     headers: getAuthHeaders(),
-    body: JSON.stringify(club),
+    body: JSON.stringify(course),
   }).then((res) => res.json());
 
-// UPDATE club
-export const updateClub = (id, club) =>
-  fetch(`${BASE_URL}/studentclub/${id}`, {
+// UPDATE course
+export const updateCourse = (id, course) =>
+  fetch(`${BASE_URL}/course/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
-    body: JSON.stringify(club),
+    body: JSON.stringify(course),
   }).then((res) => res.json());
 
-// DELETE club
-export const deleteClub = (id) =>
-  fetch(`${BASE_URL}/studentclub/${id}`, {
+// DELETE course
+export const deleteCourse = (id) =>
+  fetch(`${BASE_URL}/course/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   }).then((res) => res.ok);

@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  createCourseRegistration,
+  getSemesters,
+} from "../services/courseRegistrationService";
 
 export default function CourseRegistrationPage() {
   const [semesters, setSemesters] = useState([]);
@@ -8,14 +12,15 @@ export default function CourseRegistrationPage() {
     year: "",
     semester: "",
   });
+  const [messageType, setMessageType] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // Fetch semesters from backend
-    fetch("http://localhost:8080/api/semesters")
-      .then((res) => res.json())
-      .then((data) => setSemesters(data))
-      .catch((err) => console.error(err));
+    getSemesters()
+      .then((res) => setSemesters(res.data || []))
+      .catch((error) => {
+        console.error("Error loading semesters:", error);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -24,90 +29,118 @@ export default function CourseRegistrationPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
+    setMessageType("");
 
     if (!form.studentId || !form.courseId || !form.year || !form.semester) {
       setMessage("All fields are required!");
+      setMessageType("error");
       return;
     }
 
     try {
-      const res = await fetch(
-        "http://localhost:8080/api/course-registrations",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            studentId: parseInt(form.studentId),
-            courseId: parseInt(form.courseId),
-            year: parseInt(form.year),
-            semester: form.semester,
-          }),
-        },
-      );
+      console.log("Registering course with:", form);
 
-      if (res.ok) {
-        setMessage("Course registration successful!");
-        setForm({ studentId: "", courseId: "", year: "", semester: "" });
-      } else {
-        const err = await res.json();
-        setMessage("Error: " + (err.message || res.statusText));
-      }
+      const result = await createCourseRegistration({
+        studentId: parseInt(form.studentId, 10),
+        courseId: parseInt(form.courseId, 10),
+        year: parseInt(form.year, 10),
+        semester: form.semester,
+      });
+
+      console.log("Course registration result:", result);
+
+      setMessage("Course registration successful!");
+      setMessageType("success");
+      setForm({ studentId: "", courseId: "", year: "", semester: "" });
     } catch (error) {
-      setMessage("Error: " + error.message);
+      console.error("Course registration error:", error);
+      setMessage("Error: " + (error.message || "Registration failed"));
+      setMessageType("error");
     }
+  };
+
+  const handleCancel = () => {
+    setForm({ studentId: "", courseId: "", year: "", semester: "" });
+    setMessage("");
+    setMessageType("");
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h1 className="text-xl font-bold mb-4">Course Registration</h1>
-      {message && <p className="mb-4 text-green-600">{message}</p>}
+      <h1 className="text-2xl font-bold mb-6">Course Registration</h1>
+
+      {message && (
+        <p
+          className={`mb-4 p-2 rounded text-center ${
+            messageType === "success"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {message}
+        </p>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-medium">Student ID</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Student ID
+          </label>
           <input
             type="number"
             name="studentId"
             value={form.studentId}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter student ID"
             required
           />
         </div>
+
         <div>
-          <label className="block font-medium">Course ID</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Course ID
+          </label>
           <input
             type="number"
             name="courseId"
             value={form.courseId}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter course ID"
             required
           />
         </div>
+
         <div>
-          <label className="block font-medium">Year</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Year
+          </label>
           <input
             type="number"
+            min="1900"
             name="year"
             value={form.year}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter year"
             required
           />
         </div>
+
         <div>
-          <label className="block font-medium">Semester</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Semester
+          </label>
           <select
             name="semester"
             value={form.semester}
             onChange={handleChange}
-            className="w-full border rounded p-2"
+            className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           >
-            <option value="">Select a semester</option>
+            <option value="">Select semester</option>
             {semesters.map((sem) => (
               <option key={sem} value={sem}>
                 {sem}
@@ -115,13 +148,18 @@ export default function CourseRegistrationPage() {
             ))}
           </select>
         </div>
-        <div className="flex flex-row space-x-2">
-          <button type="submit">Submit</button>
+
+        <div className="flex gap-2">
+          <button
+            type="submit"
+            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Register
+          </button>
           <button
             type="button"
-            onClick={() =>
-              setForm({ studentId: "", courseId: "", year: "", semester: "" })
-            }
+            onClick={handleCancel}
+            className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition-colors"
           >
             Cancel
           </button>

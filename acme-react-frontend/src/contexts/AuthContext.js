@@ -24,8 +24,13 @@ export function AuthProvider({ children }) {
     try {
       const token = "Basic " + btoa(username + ":" + password);
 
-      await axios.get(
-        "http://localhost:8080/REST-ACMECollege-Skeleton/rest/students",
+      console.log(
+        "AuthContext: Attempting login with token:",
+        token.substring(0, 20) + "...",
+      );
+
+      const response = await axios.get(
+        "http://localhost:8080/REST-ACMECollege-Skeleton/api/v1/student",
         {
           headers: {
             Authorization: token,
@@ -33,11 +38,21 @@ export function AuthProvider({ children }) {
         },
       );
 
+      console.log(
+        "AuthContext: Login successful, response status:",
+        response.status,
+      );
       localStorage.setItem("auth", token);
       setUser({ token });
       return true;
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("AuthContext: Login failed with error:", {
+        message: error.message,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        url: "http://localhost:8080/REST-ACMECollege-Skeleton/api/v1/student",
+      });
       return false;
     }
   };

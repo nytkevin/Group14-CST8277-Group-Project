@@ -1,33 +1,49 @@
+const BASE_URL = "http://localhost:8080/REST-ACMECollege-Skeleton/api/v1";
+
+// Helper function to get auth headers
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("auth");
+  return {
+    "Content-Type": "application/json",
+    ...(token && { Authorization: token }),
+  };
+};
+
 // GET all professors
 export const getProfessors = () =>
-  fetch("http://localhost:8080/api/professors")
+  fetch(`${BASE_URL}/professor`, {
+    headers: getAuthHeaders(),
+  })
     .then((res) => res.json())
     .then((data) => ({ data }));
 
-// GET degrees
+// GET degrees for dropdown
 export const getDegrees = () =>
-  fetch("http://localhost:8080/api/degrees")
+  fetch(`${BASE_URL}/professor/degree`, {
+    headers: getAuthHeaders(),
+  })
     .then((res) => res.json())
     .then((data) => ({ data }));
 
 // CREATE professor
 export const createProfessor = (professor) =>
-  fetch("http://localhost:8080/api/professors", {
+  fetch(`${BASE_URL}/professor`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(),
     body: JSON.stringify(professor),
   }).then((res) => res.json());
 
 // UPDATE professor
 export const updateProfessor = (id, professor) =>
-  fetch(`http://localhost:8080/api/professors/${id}`, {
+  fetch(`${BASE_URL}/professor/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: getAuthHeaders(),
     body: JSON.stringify(professor),
   }).then((res) => res.json());
 
 // DELETE professor
 export const deleteProfessor = (id) =>
-  fetch(`http://localhost:8080/api/professors/${id}`, {
+  fetch(`${BASE_URL}/professor/${id}`, {
     method: "DELETE",
+    headers: getAuthHeaders(),
   }).then((res) => res.ok);
