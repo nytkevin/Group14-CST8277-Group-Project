@@ -47,51 +47,27 @@ export default function ClubMembershipPage({ onCancelPage }) {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h1 className="text-xl font-bold mb-4">Club Membership Registration</h1>
-      {message && <p className="mb-4 text-red-600">{message}</p>}
+  <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+  <h1 className="text-xl font-bold mb-4 text-gray-800">Club Membership</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-medium">Student ID</label>
-          <input
-            type="number"
-            name="studentId"
-            value={form.studentId}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-            placeholder="Enter student ID"
-            required
-          />
-        </div>
+  {message && <p className="mb-4 text-red-600">{message}</p>}
 
-        <div>
-          <label className="block font-medium">Club ID</label>
-          <input
-            type="number"
-            name="clubId"
-            value={form.clubId}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-            placeholder="Enter club ID"
-            required
-          />
-        </div>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <input name="studentId" value={form.studentId} onChange={handleChange}
+      placeholder="Student ID"
+      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"/>
 
-        <div className="flex flex-row space-x-2">
-          <button type="submit">Submit</button>
-          <button
-            type="button"
-            onClick={() => {
-              setForm({ studentId: "", clubId: "" });
-              setMessage("");
-              if (onCancelPage) onCancelPage();
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+    <input name="clubId" value={form.clubId} onChange={handleChange}
+      placeholder="Club ID"
+      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"/>
+
+    <div className="flex gap-2">
+      <button className="bg-green-500 text-white px-4 py-2 rounded-lg">Submit</button>
+      <button type="button" onClick={handleCancel} className="bg-gray-400 text-white px-4 py-2 rounded-lg">
+        Cancel
+      </button>
     </div>
+  </form>
+</div>
   );
 }

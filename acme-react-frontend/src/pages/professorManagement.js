@@ -77,98 +77,72 @@ export default function ProfessorManagement() {
     setForm({ firstName: "", lastName: "", degree: "" });
   };
 
-  return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">Professor Management</h2>
+   return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold text-emerald-700 mb-6">
+          Professor Management
+        </h2>
 
-      <div className="mb-4">
         <button
           onClick={handleNewProfessor}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="mb-4 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
         >
-          New Professor
+          + New Professor
         </button>
-      </div>
-
-      {showForm && (
-        <form onSubmit={handleSubmit} className="mb-6 p-4 border rounded">
-          <div className="mb-2">
-            <input
-              name="firstName"
-              placeholder="First Name"
-              value={form.firstName}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <input
-              name="lastName"
-              placeholder="Last Name"
-              value={form.lastName}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <select
-              name="degree"
-              value={form.degree}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-              required
-            >
-              <option value="">Select Degree</option>
-              {degrees.map((deg) => (
-                <option key={deg} value={deg}>
-                  {deg}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
-        </form>
-      )}
-
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">ID</th>
-            <th className="border border-gray-300 p-2">First Name</th>
-            <th className="border border-gray-300 p-2">Last Name</th>
-            <th className="border border-gray-300 p-2">Degree</th>
-            <th className="border border-gray-300 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {professors.map((professor) => (
-            <tr key={professor.id}>
-              <td className="border border-gray-300 p-2">{professor.id}</td>
-              <td className="border border-gray-300 p-2">
-                {professor.firstName}
-              </td>
-              <td className="border border-gray-300 p-2">
-                {professor.lastName}
-              </td>
-              <td className="border border-gray-300 p-2">{professor.degree}</td>
-              <td className="border border-gray-300 p-2">
-                <Actions
-                  onEdit={() => handleEdit(professor)}
-                  onDelete={() => handleDelete(professor.id)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button
-        onClick={loadProfessors}
+        <button
+          onClick={loadProfessors}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
-      >
-        Refresh
-      </button>
+        >
+          Refresh
+        </button> 
+        {showForm && (
+          <form className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg">
+            <input name="firstName" value={form.firstName} onChange={handleChange}
+              placeholder="First Name" className="w-full border p-2 rounded" />
+
+            <input name="lastName" value={form.lastName} onChange={handleChange}
+              placeholder="Last Name" className="w-full border p-2 rounded" />
+
+            <select name="degree" value={form.degree} onChange={handleChange}
+              className="w-full border p-2 rounded">
+              <option value="">Select Degree</option>
+              {degrees.map((d) => <option key={d}>{d}</option>)}
+            </select>
+
+            <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
+          </form>
+        )}
+
+        <table className="w-full border rounded-lg overflow-hidden">
+          <thead className="bg-emerald-600 text-white">
+            <tr>
+              <th>ID</th>
+              <th>First</th>
+              <th>Last</th>
+              <th>Degree</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {professors.map((p) => (
+              <tr key={p.id} className="text-center hover:bg-gray-100">
+                <td>{p.id}</td>
+                <td>{p.firstName}</td>
+                <td>{p.lastName}</td>
+                <td>{p.degree}</td>
+                <td>
+                  <Actions
+                    onEdit={() => handleEdit(p)}
+                    onDelete={() => handleDelete(p.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

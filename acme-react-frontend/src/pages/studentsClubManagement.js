@@ -80,95 +80,76 @@ export default function StudentClub() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">Student Club Management</h2>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold text-emerald-700 mb-6">
+          Student Club Management
+        </h2>
 
-      <div className="mb-4">
         <button
           onClick={handleNewClub}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          className="mb-4 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
         >
-          Add New Student Club
+          + New Club
         </button>
-      </div>
+          <button
+            onClick={loadClubs}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+          >
+            Refresh
+          </button>
+        {showForm && (
+          <form className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg">
+            <input name="name" value={form.name} onChange={handleChange}
+              placeholder="Club Name" className="w-full border p-2 rounded" />
 
-      {showForm && (
-        <form onSubmit={handleSubmit} className="mb-6 p-4 border rounded">
-          <div className="mb-2">
-            <input
-              name="name"
-              placeholder="Club Name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <input
-              name="description"
-              placeholder="Description"
-              value={form.description}
-              onChange={handleChange}
-              className="w-full border rounded p-2"
-              required
-            />
-          </div>
-          <div className="mb-2">
-            <label className="block mb-1 font-medium">Academic</label>
-            <select
-              name="academic"
+            <input name="description" value={form.description}
+              onChange={handleChange} placeholder="Description"
+              className="w-full border p-2 rounded" />
+
+            <select name="academic"
               value={form.academic.toString()}
-              onChange={(e) => {
-                const value = e.target.value === "true";
-                setForm({ ...form, academic: value });
-              }}
-              className="w-full border rounded p-2"
-              required
-            >
-              <option value="false">false</option>
-              <option value="true">true</option>
+              onChange={(e) =>
+                setForm({ ...form, academic: e.target.value === "true" })
+              }
+              className="w-full border p-2 rounded">
+              <option value="false">Non-Academic</option>
+              <option value="true">Academic</option>
             </select>
-          </div>
-          <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
-        </form>
-      )}
 
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">ID</th>
-            <th className="border border-gray-300 p-2">Name</th>
-            <th className="border border-gray-300 p-2">Description</th>
-            <th className="border border-gray-300 p-2">Academic</th>
-            <th className="border border-gray-300 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clubs.map((club) => (
-            <tr key={club.id}>
-              <td className="border border-gray-300 p-2">{club.id}</td>
-              <td className="border border-gray-300 p-2">{club.name}</td>
-              <td className="border border-gray-300 p-2">{club.desc}</td>
-              <td className="border border-gray-300 p-2">
-                {club.academic.toString()}
-              </td>
-              <td className="border border-gray-300 p-2">
-                <Actions
-                  onEdit={() => handleEdit(club)}
-                  onDelete={() => handleDelete(club.id)}
-                />
-              </td>
+            <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
+          </form>
+        )}
+
+        <table className="w-full border rounded-lg overflow-hidden">
+          <thead className="bg-emerald-600 text-white">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Academic</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <button
-        onClick={loadClubs}
-        className="ml-60 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Refresh
-      </button>
+          </thead>
+
+          <tbody>
+            {clubs.map((c) => (
+              <tr key={c.id} className="text-center hover:bg-gray-100">
+                <td>{c.id}</td>
+                <td>{c.name}</td>
+                <td>{c.desc}</td>
+                <td>{c.academic ? "Yes" : "No"}</td>
+                <td>
+                  <Actions
+                    onEdit={() => handleEdit(c)}
+                    onDelete={() => handleDelete(c.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -99,117 +99,99 @@ export default function StudentManagement() {
     setShowForm(false);
   };
 
-  return (
-    <div className="max-w-5xl mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <div className="mb-4 flex flex-wrap gap-2">
-        <button
-          onClick={handleNewStudent}
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-        >
-          Add New Student
-        </button>
-      </div>
+ return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6">
+        <h2 className="text-2xl font-bold text-emerald-700 mb-6">
+          Student Management
+        </h2>
 
-      {showForm && (
-        <form
-          onSubmit={handleSubmit}
-          className="mb-6 grid gap-4 grid-cols-1 md:grid-cols-2"
-        >
-          <input
-            name="firstName"
-            placeholder="First Name"
-            value={form.firstName}
-            onChange={handleChange}
-            className="border rounded p-2"
-            required
-          />
-          <input
-            name="lastName"
-            placeholder="Last Name"
-            value={form.lastName}
-            onChange={handleChange}
-            className="border rounded p-2"
-            required
-          />
-          <input
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            className="border rounded p-2"
-            required
-          />
-          <input
-            name="phone"
-            placeholder="Phone"
-            value={form.phone}
-            onChange={handleChange}
-            className="border rounded p-2"
-            required
-          />
-          <select
-            name="program"
-            value={form.program}
-            onChange={handleChange}
-            className="border rounded p-2"
-            required
+        <div className="flex gap-2 mb-4">
+            <button
+              onClick={handleNewStudent}
+              className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700"
+            >
+              + Add Student
+            </button>
+
+            <button
+              onClick={loadStudents}
+              className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300"
+            >
+              Refresh
+            </button>
+        </div>
+        {showForm && (
+          <form
+            onSubmit={handleSubmit}
+            className="grid gap-4 md:grid-cols-2 mb-6 p-4 border rounded-lg bg-gray-50"
           >
-            <option value="">Select Program</option>
-            {programs.map((program) => (
-              <option
-                key={program.id || program}
-                value={program.name || program}
-              >
-                {program.name || program}
-              </option>
+            {["firstName", "lastName", "email", "phone"].map((field) => (
+              <input
+                key={field}
+                name={field}
+                placeholder={field}
+                value={form[field]}
+                onChange={handleChange}
+                className="border p-2 rounded focus:ring-2 focus:ring-emerald-500"
+                required
+              />
             ))}
-          </select>
 
-          <div className="md:col-span-2">
-            <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
-          </div>
-        </form>
-      )}
+            <select
+              name="program"
+              value={form.program}
+              onChange={handleChange}
+              className="border p-2 rounded focus:ring-2 focus:ring-emerald-500"
+              required
+            >
+              <option value="">Select Program</option>
+              {programs.map((p, index) => (
+                  <option key={p.id || index} value={p.name || p}>
+                    {p.name || p}
+                  </option>
+                ))}
+            </select>
 
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 p-2">ID</th>
-            <th className="border border-gray-300 p-2">First Name</th>
-            <th className="border border-gray-300 p-2">Last Name</th>
-            <th className="border border-gray-300 p-2">Email</th>
-            <th className="border border-gray-300 p-2">Phone</th>
-            <th className="border border-gray-300 p-2">Program</th>
-            <th className="border border-gray-300 p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td className="border border-gray-300 p-2">{student.id}</td>
-              <td className="border border-gray-300 p-2">
-                {student.firstName}
-              </td>
-              <td className="border border-gray-300 p-2">{student.lastName}</td>
-              <td className="border border-gray-300 p-2">{student.email}</td>
-              <td className="border border-gray-300 p-2">{student.phone}</td>
-              <td className="border border-gray-300 p-2">{student.program}</td>
-              <td className="border border-gray-300 p-2">
-                <Actions
-                  onEdit={() => handleEdit(student)}
-                  onDelete={() => handleDelete(student.id)}
-                />
-              </td>
+            <div className="md:col-span-2">
+              <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />
+            </div>
+          </form>
+        )}
+
+        <table className="w-full border rounded-lg overflow-hidden">
+          <thead className="bg-emerald-600 text-white">
+            <tr>
+              <th className="p-2">ID</th>
+              <th className="p-2">First</th>
+              <th className="p-2">Last</th>
+              <th className="p-2">Email</th>
+              <th className="p-2">Phone</th>
+              <th className="p-2">Program</th>
+              <th className="p-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <button
-        onClick={loadStudents}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
-      >
-        Refresh
-      </button>
+          </thead>
+
+          <tbody>
+            {students.map((s) => (
+              <tr key={s.id} className="hover:bg-gray-100 text-center">
+                <td className="p-2">{s.id}</td>
+                <td>{s.firstName}</td>
+                <td>{s.lastName}</td>
+                <td>{s.email}</td>
+                <td>{s.phone}</td>
+                <td>{s.program}</td>
+                <td>
+                  <Actions
+                    onEdit={() => handleEdit(s)}
+                    onDelete={() => handleDelete(s.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

@@ -41,64 +41,31 @@ export default function AssignProfessorPage({ onCancelPage }) {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
-      <h1 className="text-xl font-bold mb-4">Assign Professor to Course</h1>
-      {message && <p className="mb-4 text-green-600">{message}</p>}
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+  <h1 className="text-xl font-bold mb-4 text-gray-800">Assign Professor</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-medium">Student ID</label>
-          <input
-            type="number"
-            name="studentId"
-            value={form.studentId}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-            placeholder="Enter student ID"
-            required
-          />
-        </div>
+  {message && <p className="mb-4 text-green-600">{message}</p>}
 
-        <div>
-          <label className="block font-medium">Course ID</label>
-          <input
-            type="number"
-            name="courseId"
-            value={form.courseId}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-            placeholder="Enter course ID"
-            required
-          />
-        </div>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    <input name="studentId" value={form.studentId} onChange={handleChange}
+      placeholder="Student ID"
+      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"/>
 
-        <div>
-          <label className="block font-medium">Professor ID</label>
-          <input
-            type="number"
-            name="professorId"
-            value={form.professorId}
-            onChange={handleChange}
-            className="w-full border rounded p-2"
-            placeholder="Enter professor ID"
-            required
-          />
-        </div>
+    <input name="courseId" value={form.courseId} onChange={handleChange}
+      placeholder="Course ID"
+      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"/>
 
-        <div className="flex flex-row space-x-2">
-          <button type="submit">Submit</button>
-          <button
-            type="button"
-            onClick={() => {
-              setForm({ studentId: "", courseId: "", professorId: "" });
-              setMessage("");
-              if (onCancelPage) onCancelPage();
-            }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+    <input name="professorId" value={form.professorId} onChange={handleChange}
+      placeholder="Professor ID"
+      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-green-400"/>
+
+    <div className="flex gap-2">
+      <button className="bg-green-500 text-white px-4 py-2 rounded-lg">Submit</button>
+      <button type="button" onClick={handleCancel} className="bg-gray-400 text-white px-4 py-2 rounded-lg">
+        Cancel
+      </button>
     </div>
+  </form>
+</div>
   );
 }
