@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.algonquincollege.cst8277.entity.SecurityUser;
 import com.algonquincollege.cst8277.rest.serializer.SecurityRoleSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -35,7 +34,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="security_user")
 @NamedQueries({ 
-    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :username"),
+    @NamedQuery(name = SecurityUser.SECURITY_USER_BY_NAME, query = "SELECT su FROM SecurityUser su WHERE su.username = :param1"),
     @NamedQuery(name = SecurityUser.SECURITY_USER_BY_STUDENT_ID, query = "SELECT su FROM SecurityUser su WHERE su.student.id = :studentId")
 })
 
@@ -51,13 +50,13 @@ public class SecurityUser implements Serializable, Principal {
   @Column(name="user_id" ,nullable = false)
   protected int id;
   
-  @Column(name = "username", nullable = false, length = 100)
+  @Column(name = "username", nullable = false, length = 100, unique = true)
   protected String username;
 
   @Column(name = "password_hash", nullable = false, length = 256)
   protected String pwHash;
   
-  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @OneToOne(optional = true)
   @JoinColumn(name = "student_id", referencedColumnName = "id")
   protected Student student;
   
