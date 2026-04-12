@@ -71,6 +71,7 @@ public class ACMECollegeService implements Serializable {
 
     private static final String READ_ALL_PROGRAMS = "SELECT name FROM program";
     private static final String READ_ALL_DEGREES = "SELECT name FROM degree";
+    private static final String READ_ALL_SEMESTERS = "SELECT name FROM semester";
     // TODO ACMECS01 - Add your query constants here.
 
     @PersistenceContext(name = PU_NAME)
@@ -201,6 +202,16 @@ public class ACMECollegeService implements Serializable {
         } catch (Exception e) {
         }
         return degrees;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> getAllSemesters() {
+        List<String> semesters = new ArrayList<>();
+        try {
+            semesters = (List<String>) em.createNativeQuery(READ_ALL_SEMESTERS).getResultList();
+        } catch (Exception e) {
+        }
+        return semesters;
     }
 
     public Professor getProfessorById(int id) {

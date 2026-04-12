@@ -70,6 +70,15 @@ public class CourseRegistrationResource {
         return Response.ok(grades).build();
     }
 
+    // GET all valid semesters (from semester table)
+    @GET
+    @Path("/semester")
+    @RolesAllowed({ ADMIN_ROLE, USER_ROLE })
+    public Response getSemesters() {
+        List<String> semesters = service.getAllSemesters();
+        return Response.ok(semesters).build();
+    }
+
     // POST a new course registration (JSON body with nested student/course)
     @POST
     @RolesAllowed({ ADMIN_ROLE })
