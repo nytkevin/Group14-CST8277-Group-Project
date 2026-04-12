@@ -587,6 +587,24 @@
           "response": []
         },
         {
+          "name": "GET Semesters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courseregistration/semester",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courseregistration",
+                "semester"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "POST Create Registration",
           "request": {
             "method": "POST",

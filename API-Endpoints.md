@@ -61,3 +61,4 @@
 | `PUT` | `/courseregistration/student/{sId}/course/{cId}/professor`| `ADMIN_ROLE` | Assign a new professor to a specific registration (Expects JSON body `{ "id": 1 }`) |
 | `PUT` | `/courseregistration/student/{sId}/course/{cId}/grade`| `ADMIN_ROLE` | Assign a letter grade to a specific registration (Expects plain text body e.g. `A+`) |
 | `GET` | `/courseregistration/lettergrade` | `ADMIN_ROLE`, `USER_ROLE` | Fetch frontend dropdown lookup values for all possible Letter Grades |
+| `GET` | `/courseregistration/semester` | `ADMIN_ROLE`, `USER_ROLE` | Fetch frontend dropdown lookup values for all possible Semesters |
