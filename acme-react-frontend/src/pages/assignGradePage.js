@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getLetterGrades } from "../services/assignGrade";
+import { assignGrade, getLetterGrades } from "../services/assignGrade";
 
 export default function AssignGradePage() {
   const [form, setForm] = useState({
@@ -8,6 +8,7 @@ export default function AssignGradePage() {
     letterGrade: "",
   });
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
   const [grades, setGrades] = useState([]);
 
   const handleChange = (e) => {
@@ -19,7 +20,22 @@ export default function AssignGradePage() {
 
     if (!form.studentId || !form.courseId || !form.letterGrade) {
       setMessage("All fields are required!");
+      setMessageType("error");
       return;
+    }
+
+    try {
+      await assignGrade(
+        parseInt(form.studentId),
+        parseInt(form.courseId),
+        form.letterGrade,
+      );
+      setMessage("Grade assigned successfully!");
+      setMessageType("success");
+      setForm({ studentId: "", courseId: "", letterGrade: "" });
+    } catch (error) {
+      setMessage("Error: " + error.message);
+      setMessageType("error");
     }
   };
 
@@ -32,7 +48,11 @@ export default function AssignGradePage() {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
       <h1 className="text-xl font-bold mb-4">Assign Grade </h1>
-      {message && <p className="mb-4 text-green-600">{message}</p>}
+      {message && (
+        <p className={`mb-4 ${messageType === "success" ? "text-green-600" : "text-red-600"}`}>
+          {message}
+        </p>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

@@ -545,6 +545,34 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "POST Add Student to Club",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/studentclub/1/member",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "studentclub",
+                "1",
+                "member"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },

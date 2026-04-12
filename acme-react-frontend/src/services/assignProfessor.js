@@ -9,13 +9,14 @@ const getAuthHeaders = () => {
   };
 };
 
-// Assign/PUT professor
+// Assign professor to a course registration
+// Backend expects PUT (not POST) and body: { "id": professorId }
 export const assignProfessor = (studentId, courseId, professorId) =>
   fetch(
     `${BASE_URL}/courseregistration/student/${studentId}/course/${courseId}/professor`,
     {
-      method: "POST",
+      method: "PUT",
       headers: getAuthHeaders(),
-      body: JSON.stringify(professorId),
+      body: JSON.stringify({ id: professorId }),
     },
   );

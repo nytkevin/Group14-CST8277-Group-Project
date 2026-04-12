@@ -52,6 +52,7 @@
 | `POST`      | `/studentclub`      | `ADMIN_ROLE`              | Create a new student club       |
 | `PUT`       | `/studentclub/{id}` | `ADMIN_ROLE`              | Update an existing student club |
 | `DELETE`    | `/studentclub/{id}` | `ADMIN_ROLE`              | Delete a student club           |
+| `POST`      | `/studentclub/{id}/member` | `ADMIN_ROLE`       | Add a student to a specific club (Expects JSON body `{ "id": 1 }`) |
 
 ---
 

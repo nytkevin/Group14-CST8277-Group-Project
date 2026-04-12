@@ -17,14 +17,22 @@ export default function ClubMembershipPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/api/club-memberships", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          studentId: parseInt(form.studentId),
-          clubId: parseInt(form.clubId),
-        }),
-      });
+      const token = localStorage.getItem("auth");
+      const res = await fetch(
+        "http://localhost:8080/REST-ACMECollege-Skeleton/api/v1/studentclub/" +
+          parseInt(form.clubId) +
+          "/member",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { Authorization: token }),
+          },
+          body: JSON.stringify({
+            id: parseInt(form.studentId),
+          }),
+        },
+      );
 
       if (res.ok) {
         setMessage("Student successfully registered to the club!");

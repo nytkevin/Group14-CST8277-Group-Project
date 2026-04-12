@@ -60,7 +60,11 @@ export default function StudentClub() {
   };
 
   const handleEdit = (club) => {
-    setForm(club);
+    setForm({
+      name: club.name || "",
+      description: club.desc || "",
+      academic: club.academic,
+    });
     setEditingId(club.id);
     setShowForm(true);
   };
@@ -145,7 +149,7 @@ export default function StudentClub() {
             <tr key={club.id}>
               <td className="border border-gray-300 p-2">{club.id}</td>
               <td className="border border-gray-300 p-2">{club.name}</td>
-              <td className="border border-gray-300 p-2">{club.description}</td>
+              <td className="border border-gray-300 p-2">{club.desc}</td>
               <td className="border border-gray-300 p-2">
                 {club.academic.toString()}
               </td>

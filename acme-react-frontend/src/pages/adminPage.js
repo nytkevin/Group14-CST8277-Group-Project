@@ -8,6 +8,7 @@ import StudentClub from "./studentsClubManagement";
 import CourseRegistrationPage from "./courseRegistration";
 import AssignProfessorPage from "./assignProfessorPage";
 import AssignGradePage from "./assignGradePage";
+import ClubMembershipPage from "./clubMembershipRegistration";
 import LandingPage from "./landingPage";
 const pageMap = {
   "Student Management": StudentManagement,
@@ -17,6 +18,7 @@ const pageMap = {
   "Course Registration": CourseRegistrationPage,
   "Assign Professor": AssignProfessorPage,
   "Assign Grade": AssignGradePage,
+  "Club Membership Registration": ClubMembershipPage,
 };
 
 export default function AdminPage({ loggedIn, showLogin, setShowLogin }) {
@@ -66,6 +68,9 @@ export default function AdminPage({ loggedIn, showLogin, setShowLogin }) {
                 <option value="Course Registration">Course Registration</option>
                 <option value="Assign Professor">Assign Professor</option>
                 <option value="Assign Grade">Assign Grade</option>
+                <option value="Club Membership Registration">
+                  Club Membership Registration
+                </option>
               </select>
             </div>
           </div>
