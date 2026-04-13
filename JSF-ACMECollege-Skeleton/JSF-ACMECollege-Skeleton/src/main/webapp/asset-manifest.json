@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/JSF-ACMECollege-Skeleton/static/css/main.d9b71d77.css",
-    "main.js": "/JSF-ACMECollege-Skeleton/static/js/main.dcfbcbc7.js",
+    "main.css": "/JSF-ACMECollege-Skeleton/static/css/main.5cd191e5.css",
+    "main.js": "/JSF-ACMECollege-Skeleton/static/js/main.960883cb.js",
     "static/js/453.a64e529e.chunk.js": "/JSF-ACMECollege-Skeleton/static/js/453.a64e529e.chunk.js",
     "index.html": "/JSF-ACMECollege-Skeleton/index.html",
-    "main.d9b71d77.css.map": "/JSF-ACMECollege-Skeleton/static/css/main.d9b71d77.css.map",
-    "main.dcfbcbc7.js.map": "/JSF-ACMECollege-Skeleton/static/js/main.dcfbcbc7.js.map",
+    "main.5cd191e5.css.map": "/JSF-ACMECollege-Skeleton/static/css/main.5cd191e5.css.map",
+    "main.960883cb.js.map": "/JSF-ACMECollege-Skeleton/static/js/main.960883cb.js.map",
     "453.a64e529e.chunk.js.map": "/JSF-ACMECollege-Skeleton/static/js/453.a64e529e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d9b71d77.css",
-    "static/js/main.dcfbcbc7.js"
+    "static/css/main.5cd191e5.css",
+    "static/js/main.960883cb.js"
   ]
 }

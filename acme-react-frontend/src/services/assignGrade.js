@@ -13,7 +13,11 @@ const getAuthHeaders = () => {
 const handleResponse = async (res) => {
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(text || `Request failed with status ${res.status}`);
+    let errorMsg = text;
+    if (text && text.trim().startsWith("<")) {
+      errorMsg = `Server error ${res.status}: The requested resource was not found or is unavailable.`;
+    }
+    throw new Error(errorMsg || `Request failed with status ${res.status}`);
   }
   return res.json();
 };

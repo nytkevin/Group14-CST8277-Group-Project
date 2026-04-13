@@ -66,13 +66,21 @@ public class StudentClubResource {
         @PathParam(RESOURCE_PATH_ID_ELEMENT) int clubId,
         Student student
     ) {
+        if (student == null || student.getId() == 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                           .entity("Registration failed: Missing valid student payload")
+                           .build();
+        }
+
         StudentClub updatedClub = service.addStudentToClub(
             clubId,
             student.getId()
         );
 
         if (updatedClub == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity("Club or student not found")
+                           .build();
         }
         return Response.ok(updatedClub).build();
     }

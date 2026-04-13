@@ -118,25 +118,47 @@ export default function CourseManagement() {
           Add New Course
         </button>
         <button
-            onClick={loadCourses}
-           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+          onClick={loadCourses}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
         >
           Refresh
         </button>
         {showForm && (
-          <form className="grid gap-4 md:grid-cols-2 mb-6 p-4 bg-gray-50 rounded-lg">
-            <input name="courseCode" value={form.courseCode} onChange={handleChange}
-              placeholder="Code" className="border p-2 rounded focus:ring-emerald-500" />
+          <form
+            onSubmit={handleSubmit}
+            className="grid gap-4 md:grid-cols-2 mb-6 p-4 bg-gray-50 rounded-lg"
+          >
+            <input
+              name="courseCode"
+              value={form.courseCode}
+              onChange={handleChange}
+              placeholder="Code"
+              className="border p-2 rounded focus:ring-emerald-500"
+            />
 
-            <input name="courseTitle" value={form.courseTitle} onChange={handleChange}
-              placeholder="Title" className="border p-2 rounded" />
+            <input
+              name="courseTitle"
+              value={form.courseTitle}
+              onChange={handleChange}
+              placeholder="Title"
+              className="border p-2 rounded"
+            />
 
-            <input type="number" name="creditUnits" value={form.creditUnits}
-              onChange={handleChange} placeholder="Credits"
-              className="border p-2 rounded" />
+            <input
+              type="number"
+              name="creditUnits"
+              value={form.creditUnits}
+              onChange={handleChange}
+              placeholder="Credits"
+              className="border p-2 rounded"
+            />
 
-            <select name="online" value={form.online} onChange={handleChange}
-              className="border p-2 rounded">
+            <select
+              name="online"
+              value={form.online}
+              onChange={handleChange}
+              className="border p-2 rounded"
+            >
               <option value="0">Offline</option>
               <option value="1">Online</option>
             </select>

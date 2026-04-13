@@ -339,8 +339,23 @@ public class ACMECollegeService implements Serializable {
         if (existing == null) {
             return null;
         }
+
+        // JPA ignores updates to Discriminator columns with standard merging. 
+        // We must update it with a native SQL query manually to switch classes.
+        if (existing.getAcademic() != updates.getAcademic()) {
+            em.createNativeQuery("UPDATE student_club SET academic = :academic WHERE club_id = :id")
+              .setParameter("academic", updates.getAcademic() ? 1 : 0)
+              .setParameter("id", id)
+              .executeUpdate();
+              
+            em.flush();
+            em.clear(); // Clear persistence context so JPA pulls the new Subclass
+            existing = em.find(StudentClub.class, id);
+        }
+
         existing.setName(updates.getName());
         existing.setDesc(updates.getDesc());
+        // setAcademic is kept for memory consistency although JPA ignores it
         existing.setAcademic(updates.getAcademic());
         return em.merge(existing);
     }

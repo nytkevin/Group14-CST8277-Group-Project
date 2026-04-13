@@ -13,6 +13,10 @@ const getAuthHeaders = () => {
 const handleResponse = async (res) => {
   if (!res.ok) {
     const text = await res.text();
+    // Prevent raw HTML 500 pages from being dumped into the frontend UI directly
+    if (text && text.trim().startsWith("<!DOCTYPE html")) {
+      throw new Error(`Server encountered an internal error (Status ${res.status}). Check backend logs.`);
+    }
     throw new Error(text || `Request failed with status ${res.status}`);
   }
   return res.json();
@@ -52,6 +56,9 @@ export const createCourseRegistration = async (registration) => {
 
   if (!res.ok) {
     const text = await res.text();
+    if (text && text.trim().startsWith("<!DOCTYPE html")) {
+      throw new Error(`Server encountered an internal error (Status ${res.status}). Check backend logs.`);
+    }
     throw new Error(text || "Registration failed");
   }
 

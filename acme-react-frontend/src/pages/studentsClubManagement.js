@@ -92,27 +92,41 @@ export default function StudentClub() {
         >
           + New Club
         </button>
-          <button
-            onClick={loadClubs}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
-          >
-            Refresh
-          </button>
+        <button
+          onClick={loadClubs}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+        >
+          Refresh
+        </button>
         {showForm && (
-          <form className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg">
-            <input name="name" value={form.name} onChange={handleChange}
-              placeholder="Club Name" className="w-full border p-2 rounded" />
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg"
+          >
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Club Name"
+              className="w-full border p-2 rounded"
+            />
 
-            <input name="description" value={form.description}
-              onChange={handleChange} placeholder="Description"
-              className="w-full border p-2 rounded" />
+            <input
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              placeholder="Description"
+              className="w-full border p-2 rounded"
+            />
 
-            <select name="academic"
+            <select
+              name="academic"
               value={form.academic.toString()}
               onChange={(e) =>
                 setForm({ ...form, academic: e.target.value === "true" })
               }
-              className="w-full border p-2 rounded">
+              className="w-full border p-2 rounded"
+            >
               <option value="false">Non-Academic</option>
               <option value="true">Academic</option>
             </select>

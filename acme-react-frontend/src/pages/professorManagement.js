@@ -77,7 +77,7 @@ export default function ProfessorManagement() {
     setForm({ firstName: "", lastName: "", degree: "" });
   };
 
-   return (
+  return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-6">
         <h2 className="text-2xl font-bold text-emerald-700 mb-6">
@@ -92,22 +92,41 @@ export default function ProfessorManagement() {
         </button>
         <button
           onClick={loadProfessors}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-60"
         >
           Refresh
-        </button> 
+        </button>
         {showForm && (
-          <form className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg">
-            <input name="firstName" value={form.firstName} onChange={handleChange}
-              placeholder="First Name" className="w-full border p-2 rounded" />
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-3 mb-6 bg-gray-50 p-4 rounded-lg"
+          >
+            <input
+              name="firstName"
+              value={form.firstName}
+              onChange={handleChange}
+              placeholder="First Name"
+              className="w-full border p-2 rounded"
+            />
 
-            <input name="lastName" value={form.lastName} onChange={handleChange}
-              placeholder="Last Name" className="w-full border p-2 rounded" />
+            <input
+              name="lastName"
+              value={form.lastName}
+              onChange={handleChange}
+              placeholder="Last Name"
+              className="w-full border p-2 rounded"
+            />
 
-            <select name="degree" value={form.degree} onChange={handleChange}
-              className="w-full border p-2 rounded">
+            <select
+              name="degree"
+              value={form.degree}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            >
               <option value="">Select Degree</option>
-              {degrees.map((d) => <option key={d}>{d}</option>)}
+              {degrees.map((d) => (
+                <option key={d}>{d}</option>
+              ))}
             </select>
 
             <Actions onSubmit onCancel={handleCancel} editing={!!editingId} />

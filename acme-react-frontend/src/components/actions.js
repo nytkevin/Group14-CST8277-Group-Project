@@ -38,7 +38,11 @@ export default function Actions({
       {onDelete && (
         <button
           type="button"
-          onClick={onDelete}
+          onClick={() => {
+            if (window.confirm("Are you sure you want to delete this item?")) {
+              onDelete();
+            }
+          }}
           className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
         >
           Delete
