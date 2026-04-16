@@ -1,13 +1,14 @@
 package com.algonquincollege.cst8277.rest.resource;
 
 import static com.algonquincollege.cst8277.utility.MyConstants.ADMIN_ROLE;
-import static com.algonquincollege.cst8277.utility.MyConstants.USER_ROLE;
-import static com.algonquincollege.cst8277.utility.MyConstants.STUDENT_CLUB_RESOURCE_NAME;
 import static com.algonquincollege.cst8277.utility.MyConstants.RESOURCE_PATH_ID_ELEMENT;
 import static com.algonquincollege.cst8277.utility.MyConstants.RESOURCE_PATH_ID_PATH;
+import static com.algonquincollege.cst8277.utility.MyConstants.STUDENT_CLUB_RESOURCE_NAME;
+import static com.algonquincollege.cst8277.utility.MyConstants.USER_ROLE;
 
-import java.util.List;
-
+import com.algonquincollege.cst8277.ejb.ACMECollegeService;
+import com.algonquincollege.cst8277.entity.Student;
+import com.algonquincollege.cst8277.entity.StudentClub;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
@@ -15,11 +16,9 @@ import jakarta.security.enterprise.SecurityContext;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.algonquincollege.cst8277.ejb.ACMECollegeService;
-import com.algonquincollege.cst8277.entity.StudentClub;
 
 @Path(STUDENT_CLUB_RESOURCE_NAME)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -60,10 +59,39 @@ public class StudentClubResource {
         return Response.status(Response.Status.CREATED).entity(newClub).build();
     }
 
+    @POST
+    @Path("/{id}/member")
+    @RolesAllowed({ ADMIN_ROLE })
+    public Response addStudentToClub(
+        @PathParam(RESOURCE_PATH_ID_ELEMENT) int clubId,
+        Student student
+    ) {
+        if (student == null || student.getId() == 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                           .entity("Registration failed: Missing valid student payload")
+                           .build();
+        }
+
+        StudentClub updatedClub = service.addStudentToClub(
+            clubId,
+            student.getId()
+        );
+
+        if (updatedClub == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity("Club or student not found")
+                           .build();
+        }
+        return Response.ok(updatedClub).build();
+    }
+
     @PUT
     @Path(RESOURCE_PATH_ID_PATH)
     @RolesAllowed({ ADMIN_ROLE })
-    public Response updateClub(@PathParam(RESOURCE_PATH_ID_ELEMENT) int id, StudentClub updates) {
+    public Response updateClub(
+        @PathParam(RESOURCE_PATH_ID_ELEMENT) int id,
+        StudentClub updates
+    ) {
         StudentClub updated = service.updateClubById(id, updates);
         if (updated == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

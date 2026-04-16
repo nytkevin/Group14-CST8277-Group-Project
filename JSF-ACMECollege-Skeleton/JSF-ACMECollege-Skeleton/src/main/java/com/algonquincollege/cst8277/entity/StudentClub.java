@@ -2,14 +2,17 @@
  * File:  StudentClub.java Course Materials CST 8277
  *
  * @author Teddy Yap
- * 
+ *
  */
 package com.algonquincollege.cst8277.entity;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.algonquincollege.cst8277.entity.Academic;
+import com.algonquincollege.cst8277.entity.NonAcademic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.AttributeOverride;
@@ -33,113 +36,140 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-
-import com.algonquincollege.cst8277.entity.Academic;
-import com.algonquincollege.cst8277.entity.NonAcademic;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @SuppressWarnings("unused")
-
 /**
  * The persistent class for the student_club database table.
  */
 @Entity
-@Table(name="student_club")
+@Table(name = "student_club")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="academic", discriminatorType = DiscriminatorType.INTEGER) 
-@EntityListeners(PojoListener.class) 
+@DiscriminatorColumn(
+    name = "academic",
+    discriminatorType = DiscriminatorType.INTEGER
+)
+@EntityListeners(PojoListener.class)
+@NamedQuery(
+    name = StudentClub.ALL_STUDENT_CLUBS_QUERY,
+    query = "SELECT DISTINCT sc FROM StudentClub sc LEFT JOIN FETCH sc.studentMembers"
+)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes(
+    {
+        @Type(value = Academic.class, name = "academic"),
+        @Type(value = NonAcademic.class, name = "non-academic"),
+    }
+)
+@AttributeOverride(name = "id", column = @Column(name = "club_id"))
 public class StudentClub extends PojoBase implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "club_id")
-    protected int id;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "name", nullable = false, length = 100)
-	protected String name;
-	
-	@Column(name = "description", length = 255)
-	protected String desc;
+    public static final String ALL_STUDENT_CLUBS_QUERY = "StudentClub.findAll";
 
-	@Column(name = "academic", nullable = false, insertable = false, updatable = false)
-	protected boolean isAcademic;
+    @Column(name = "name", nullable = false, length = 100)
+    protected String name;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	@JoinTable( name = "student_club_members", 
-	joinColumns = @JoinColumn(name = "club_id"), 
-	inverseJoinColumns = @JoinColumn(name = "student_id"))
-	@JsonIgnore
-	protected Set<Student> studentMembers = new HashSet<Student>();
-	
-	@Transient
-	protected boolean editable = false;
+    @Column(name = "description", length = 255)
+    protected String desc;
 
-	public StudentClub() {
-		super();
-	}
+    @Column(
+        name = "academic",
+        nullable = false,
+        insertable = false,
+        updatable = false
+    )
+    protected boolean isAcademic;
+
+    @ManyToMany(
+        mappedBy = "studentClubs",
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE },
+        fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    protected Set<Student> studentMembers = new HashSet<Student>();
+
+    @Transient
+    protected boolean editable = false;
+
+    public StudentClub() {
+        super();
+    }
 
     public StudentClub(boolean isAcademic) {
         this();
         this.isAcademic = isAcademic;
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getDesc() {
-		return desc;
-	}
+    public String getDesc() {
+        return desc;
+    }
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-	
-	public boolean getAcademic() {
-		return this.isAcademic;
-	}
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-	public void setAcademic(boolean isAcademic) {
-		this.isAcademic = isAcademic;
-	}
+    public boolean getAcademic() {
+        return this.isAcademic;
+    }
 
-	public Set<Student> getStudentMembers() {
-		return studentMembers;
-	}
+    public void setAcademic(boolean isAcademic) {
+        this.isAcademic = isAcademic;
+    }
 
-	public void setStudentMembers(Set<Student> studentMembers) {
-		this.studentMembers = studentMembers;
-	}
+    public Set<Student> getStudentMembers() {
+        return studentMembers;
+    }
 
-	public boolean isEditable() {
-		return editable;
-	}
+    public void setStudentMembers(Set<Student> studentMembers) {
+        this.studentMembers = studentMembers;
+    }
 
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
+    public boolean isEditable() {
+        return editable;
+    }
 
-	//Inherited hashCode/equals is sufficient for this Entity class
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StudentClub[id = ").append(id).append(", name = ").append(name).append(", desc = ")
-				.append(desc).append(", isAcademic = ").append(isAcademic)
-				.append(", created = ").append(created).append(", updated = ").append(updated).append(", version = ").append(version).append("]");
-		return builder.toString();
-	}
-	
+    // Inherited hashCode/equals is sufficient for this Entity class
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder
+            .append("StudentClub[id = ")
+            .append(id)
+            .append(", name = ")
+            .append(name)
+            .append(", desc = ")
+            .append(desc)
+            .append(", isAcademic = ")
+            .append(isAcademic)
+            .append(", created = ")
+            .append(created)
+            .append(", updated = ")
+            .append(updated)
+            .append(", version = ")
+            .append(version)
+            .append("]");
+        return builder.toString();
+    }
 }
